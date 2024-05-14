@@ -1,0 +1,60 @@
+Title: Optimizing Employee Insurance Plans for Small Businesses in New York
+
+Abstract: 
+This paper presents a data-driven approach to analyze health insurance plans for our New York-based company. Our goal is to identify and evaluate insurance plans that reduce costs for employees while matching their risk levels. By using a detailed dataset that includes charges and medical service information from different New York hospitals and medical centers, we examine the factors contributing to healthcare costs and charges, focusing on the most important coverages to include in our company's health insurance plan. The analysis utilizes regression models, including stepwise regression, LASSO regression, regression trees, random forest, and gradient boost, to predict cost-sharing amounts. Our analysis will provide insights to find insurance options that optimize coverage and minimize financial burdens for our valued employees. 
+
+Introduction: 
+New Yorkers have the second-highest average annual health insurance premium cost at $8,542, and it is progressively increasing. However, the increased costs have not translated into better healthcare quality.[1] Furthermore, after the Covid-19 pandemic, New York insurance premiums could face steep increases due to delayed appointments and the general increase in cost of living. [2] All of these conditions underscore the importance of finding an optimal health insurance plan when considering where to work in New York City.
+
+In fact, small businesses in New York have the difficulty of providing good benefits to attract employees. Therefore, small businesses need to understand the factors that affect healthcare costs when shopping for insurance plans for their employees. This analysis aims to provide the analytical models necessary to find optimal plans that minimize rates and employee cost-sharing. Besides, this can help recognize health risk factors for creating wellness programs and can help reduce potential sick leave. Our data-driven method offers evidence-based information for negotiating better rates and making informed decisions.
+
+
+
+Data Collection and Preprocessing:
+
+
+Methodology:
+Raw dataset was converted from a CSV to Feather format in order to reduce storage size and increase read times.
+Lookup dictionaries were created for description variables that have corresponding identifier variables, and each dictionary was checked to ensure each identifier only had a single unique description. To eliminate redundancy, description variables were dropped in favor of the identifier variables which were to be used as categorical variables.
+Empty fields for certain variables had to be transformed in order to prevent losing a significant portion of data when dropping null rows. When examining the null data points more closely, a correlation to the patient diagnoses was found. By filtering for null facility IDs, three types of diagnoses explained 93% of the total null data points. As shown in Figure (?), the three diagnoses are pregnancy related. Furthermore, using this same filtering and looking at the Abortion.Edit.Indicator column shows that all the null values are related to abortions. Based on this data, it is reasonable to assume that the pregnancy related diagnoses are covered under information privacy legislation. This is also reinforced with the description from the data source, where it comments that the dataset does not contain protected health information under the Health Insurance Portability and Accountability Act (HIPAA). With 2,622,133 total rows in the whole dataset, the 4887 rows with null datapoints only contribute 0.19% of the dataset. One option to fill in the nulls is to impute the data. However, since all the missing data comes from a single group, there is a high likelihood that a bias can be introduced when the data is filled in. Therefore, when considering the group size and the implications of imputing the data, dropping these rows is an appropriate course of action.
+Several other variables had empty fields that were explainable and could be filled with a null indicator variable. For instance, the Risk of Mortality was observed to be empty when the Severity of Illness variable was 0. Subsequently, these empty fields were filled with a "None" category to indicate no risk of mortality when the illness has no severity. Additionally, most data points only had one source of payment which meant the Source of Payment 1 and Source of Payment 2 variables had mostly empty fields. Filling these variables empty fields with a "None" category would prevent these data points from being needlessly dropped.
+All categorical variables were converted into factors so that they may be later converted into indicator variables for each level during the modeling process. The factorization process also assisted in showing which variables required additionally cleaning efforts. For instance, the Zip Code variable required substring replacement to get rid of erroneous decimal values. The Length of Stay variable was also shown to have a non-discrete level value ("120 +") for lengths outside the [1,120] range. A separate Extended Stay indicator variable was created for this scenario so that the Length of Stay variable could be converted into a discrete integer variable. 
+
+Once the factorization process was complete, the data was filtered in order to facilitate initial modeling.
+Null were dorpped to remove rows with missing data.
+The Provider License Number variables were dropped due to having to many factor levels (around the order of approximately 10,000 to 30,000 each). The excessive number of indicator variables would inhibit the ability to generate easily interpretable models within a reasonable period of time.
+The "0 to 17" and "70 or Older" age groups were filtered out of the dataset to tailor the models to working adults. A column for people of color (POC) was also created from binning the "Race" column to be able to model this effect.
+Lastly, a 70-30 Train-Test split with a fixed random seed was used to allow assessments of model accuracy further down the pipeline.
+
+
+Data Analysis:
+In regression analysis it is important to check for multicollinearity by screening out variables with correlation between each other. Features in a model should be independent from each other, and correlation between them affects the power of the variables in the model output. Typically correlation coefficients between variables are calculated to estimate multicollinearity. However, in the case of our data, most of the independent variables are categorical, not continuous. Correlation is typically calculated with variables that exist in a continuous numerical range. With categorical variables, we may need to use another test, such as the Chi-Square indepdence test to estimate correlation between the variables.
+
+Analytical Methods
+
+Exploratory Data Analysis
+Understanding the foundational relationship between the dataset’s variables was the first step taken in data exploration. As our main question focused on costs, both from an employer perspective and the individual, separating the relationship between key variables and those associated with the financial impact was needed.
+The two fields corresponding with financial figures are Total Charges and Total Costs. Total charges represent the amount the facility charged for services, while total costs is the amount billed to patients after insurance and other coverage deductions. The relationship between these two fields would demonstrate if coverage deductions correlate with the amount charged. This relationship proved to be rather linear and highlighted possible observations holding outliers (Figure 2).
+
+
+The second observation was between length of stay and total costs. The average length of stay is 5.5 days and stays between 1 to 5 days make up 39.6% of total costs. A key feature in this field is, as previously stated,that any stay of 120 days and above was represented by “120+”, causing a large segment group being made for those data points. The use of our indicator variable Extended Stay would address this grouping. Additionally, costs shared amount (Total Charges – Total Costs) was a calculated field used to evaluate the amount of 
+expenses carried by insurance and therefore impact employer contribution. This shared a similar relationship and distribution as that of total costs when compared to length of stay, with 40.3% of shared cost deriving from stays between 1 to 5 days.
+
+The third observation was on APR Risk of Mortality. This field measured the risk level of a patient’s need of care and included nulls representing observations redacted due to being pregnancy/childbirth related. The majority of patient observations were for a “minor” level, however, they contributed the most to costs making up 42.1% of total costs. Another distinguishable measure was the average cost by risk level, with pregnancy-related items at an average of $45,447. Next, “Extreme” held the second highest at $41,450 and followed an expected decline to the lowest risk level (minor) of $7,968. 
+
+
+The last observation focused on Source of Payment 1. This field is the primary source of payment for care, so in relation to our main objective, this would show if private or employer-based insurance would marginally be higher compared to federal programs or self-pay. The results showed very little difference in the contribution percentage of costs shared. This could be due to negotiated premiums and amounts,and leniency on self-pay with payment plans or settlement amounts. Overall, 48.6% of observations had some form of federal program as primary payment, while 45.6% utilized private insurance and 4.8% was self-pay. As patients can have a second and third source of payment, further review is needed to see if private insurance contributes as an additional form of coverage. 
+
+
+
+
+
+Discussion:
+Challenges
+As originally planned, we will make a future attempt to utilize a random forest model in our analysis. This would be a careful consideration and not a definite must as our current dataset has many categorical variables, some with many category levels, and this could impact random forest modeling performance. Possible techniques would include grouping certain category levels to diminish the size or one-hot encoding for significant variables to address this challenge. 
+
+Planned Approach
+After seeing much of the relationship between key variables and total charges, total costs, and costs shared, we are able to see the impact of employer-based coverage. With both total costs (individual) and costs shared (coverage/employer) not having any disparate movement for actual charges from medical facilities, prioritizing savings from both is mutually exclusive. An adjoining dataset focusing on either individual premiums or employer contributions to health plans would be an ideal next step to solidify our results. 
+
+
+

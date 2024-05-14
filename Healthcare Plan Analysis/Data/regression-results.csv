@@ -1,0 +1,5 @@
+﻿Feature Selection Method,Linear Regression Formula,R-Squared,Adjusted R-Squared
+Step Regression,Total.Charges ~ Length.of.Stay + APR.DRG.Code + Extended.Stay + Facility.ID + APR.Severity.of.Illness.Code + APR.MDC.Code +  CCS.Procedure.Code + CCS.Diagnosis.Code + APR.Risk.of.Mortality + Patient.Disposition + Type.of.Admission + Age.Group + Gender + Source.of.Payment.2 + Emergency.Department.Indicator,0.6837,0.683
+LASSO Regression,Total.Charges ~ Operating.Certificate.Number + Length.of.Stay + CCS.Diagnosis.Code + CCS.Procedure.Code + APR.DRG.Code + APR.MDC.Code + APR.Severity.of.Illness.Code + Extended.Stay,0.6786,0.6779
+Step Regression,Cost.Shared ~ Facility.ID + APR.DRG.Code + Emergency.Department.Indicator + Source.of.Payment.1 + Type.of.Admission + Patient.Disposition + APR.Severity.of.Illness.Code + Length.of.Stay + APR.Risk.of.Mortality + Age.Group + Source.of.Payment.2,0.6404,0.64
+LASSO Regression,Cost.Shared ~ Operating.Certificate.Number + Facility.ID + Length.of.Stay + CCS.Procedure.Code + APR.DRG.Code + APR.MDC.Code + APR.Severity.of.Illness.Code + Extended.Stay,0.6379,0.6373

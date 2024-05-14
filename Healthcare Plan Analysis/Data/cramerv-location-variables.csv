@@ -1,0 +1,5 @@
+﻿,Facility ID,Operating Certificate Number,Hospital County,Health Service Area
+Facility ID,1,1,1,1
+Operating Certificate Number,1,1,0.9977,0.9983
+Hospital County,1,0.9977,1,1
+Health Service Area,1,0.9983,1,1

@@ -1,0 +1,9 @@
+Health.Service.Area,Hospital.County
+Capital/Adiron,"['Albany', 'Columbia', 'Delaware', 'Essex', 'Franklin', 'Fulton', 'Montgomery', 'Otsego', 'Rensselaer', 'Saratoga', 'Schenectady', 'Warren']"
+Central NY,"['Cayuga', 'Herkimer', 'Jefferson', 'Lewis', 'Madison', 'Oneida', 'Onondaga', 'Oswego', 'St Lawrence']"
+Finger Lakes,"['Chemung', 'Livingston', 'Monroe', 'Ontario', 'Schuyler', 'Steuben']"
+Hudson Valley,"['Dutchess', 'Orange', 'Putnam', 'Rockland', 'Sullivan', 'Ulster', 'Westchester']"
+Long Island,"['Nassau', 'Suffolk']"
+New York City,"['Bronx', 'Kings', 'Manhattan', 'Queens']"
+Southern Tier,['Broome']
+Western NY,"['Allegany', 'Cattaraugus', 'Chautauqua', 'Erie', 'Genesee', 'Niagara', 'Orleans', 'Wyoming']"

@@ -1,0 +1,7 @@
+With the most significant cost predictors identified from LASSO and step regression, we can now use that information to help employees assess their risk to have high healthcare costs. To do that, we can find groups within the features in the dataset and calculate their average healthcare costs. 
+
+Clustering algorithms are an effective way to identify groups with high dimension data. In this case, since the identified features have both categorical and continuous variables, we use the k-prototype clustering algorithm, which mixes k-means and k-modes clustering. In an attempt to find the optimal number of clusters, the algorithm was run with k=1 to k=14. The results are shown in the scree plot below.
+
+The total-within-cluster sum of squared error is shown for each cluster, and levels off at k=12. Admittedly, there may be additional variation explained more groups, but the computation time became too long to continue past 14 clusters. With the 12 clusters identified, the median healthcare cost and the inter-quartile range of each cluster was calculated, which can be seen in Figure N below. 
+
+From this plot we can see that groups 1 and 10 are outliers with much higher total costs than the other groups. Further inspection of these groups' features show that they are patients affected with high severity psychiatric disorders. With this type of information we can help inform our employees of their risks and recommend appropriate healthcare plans to help mitigate the cost. 
