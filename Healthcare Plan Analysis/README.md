@@ -1,6 +1,3 @@
-# Team-72
- Team 72's group project GitHub repository for MGT 6203 (Canvas) Fall of 2023 semester.
-
 ## Project Summary
 
 ## Getting Started
